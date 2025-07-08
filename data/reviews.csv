@@ -1,0 +1,11 @@
+review_id,space_id,username,rating,review_text,created_at
+1,11,Erika V,4,"The interior is beautiful and full of natural light. It gets noisy in the afternoons though. Great coffee and plenty of sockets.",2024.11
+2,11,Tomas J,5,"Probably the best coworking space in Vilnius. Super fast Wi-Fi, quiet phone booths, and a really welcoming community.",2024.10
+3,11,Lina S,5,"Such a productive atmosphere! Clean desks, plants everywhere, and chill background music. Will definitely book again.",2024.09
+4,12,Diana R,2,"They messed up my reservation and I had to wait 30 minutes. No apology, and the staff seemed very unorganized. Not worth the price.",2024.08
+5,12,Rytis K,5,"Super professional environment with ergonomic chairs and well-equipped meeting rooms. Perfect if you need to focus.",2024.07
+6,11,Aurimas P,5,"Great for freelancers! Loved the creative vibe, the lounge corner, and free snacks. They even had a cat walking around 🐱",2024.06
+7,11,Jolita B,3,"Nice location, but not enough private spaces. I struggled to take calls without getting interrupted. Could be better.",2021.12
+8,11,Emilija Z,5,"I spent a week here and didn’t want to leave. Excellent coffee, friendly people, and a cozy feel that boosts productivity.",2021.10
+9,8,Nojus L,2,"Not great. It was cold inside, chairs weren’t comfortable, and it smelled of paint. Maybe just bad timing for my visit.",2021.08
+10,7,Elzė M,5,"Everything I needed for a perfect remote work day — fast internet, clean kitchen, focus zones, and lots of light.",2021.05
