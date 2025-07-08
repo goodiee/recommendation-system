@@ -154,55 +154,7 @@ def load_csv_to_db(conn, csv_path):
             except Exception as e:
                 conn.rollback()
                 print(f"Error processing row {idx} venue_id={row.get('venue_id')}: {e}")
-
-
-def load_catalog_csv(conn, csv_path):
-    with conn.cursor() as cursor, open(csv_path, newline="", encoding="utf-8") as csvfile:
-        reader = csv.DictReader(csvfile)
-        for idx, row in enumerate(reader):
-            try:
-                item_id = int(row["item_id"])
-                space_id = int(row["space_id"])
-                name = row["name"].strip()
-                description = row.get("description") or None
-                size = row.get("size") or None
-                images = parse_pg_array(row.get("images", ""))
-                price = float(row["price"])
-                item_type = row.get("item_type") or None
-                category = row.get("category") or None
-                created_at = parse_date(row.get("created_at"))
-
-                images_pg = to_pg_array(images)
-
-                cursor.execute(
-                    """
-                    INSERT INTO catalog (
-                        item_id, space_id, name, description, size, images, price, item_type, category, created_at
-                    ) VALUES (
-                        %(item_id)s, %(space_id)s, %(name)s, %(description)s, %(size)s, %(images)s::text[], %(price)s,
-                        %(item_type)s, %(category)s, %(created_at)s::timestamptz
-                    )
-                    ON CONFLICT (item_id) DO NOTHING;
-                    """,
-                    {
-                        "item_id": item_id,
-                        "space_id": space_id,
-                        "name": name,
-                        "description": description,
-                        "size": size,
-                        "images": images_pg,
-                        "price": price,
-                        "item_type": item_type,
-                        "category": category,
-                        "created_at": created_at,
-                    }
-                )
-                conn.commit()
-                print(f"Inserted catalog item_id={item_id}")
-            except Exception as e:
-                conn.rollback()
-                print(f"Error processing catalog row {idx} item_id={row.get('item_id')}: {e}")
-
+                
 
 def load_catalog_csv(conn, csv_path):
     with conn.cursor() as cursor, open(csv_path, newline="", encoding="utf-8") as csvfile:
