@@ -1,26 +1,41 @@
-# Recommendation System (Simplified Version)
+# RAG with MPNet Embeddings for Venue Search and Reviews
 
-This repository is a **simplified analogue** of a real recommendation system project. It serves to demonstrate the technologies and methodologies used in building recommendation systems. The full project contains more features and complexity, but this version showcases the core concepts and tools used in the process.
+This repository implements a **Retrieval-Augmented Generation (RAG)** model for querying a PostgreSQL database containing venue information and reviews. The RAG helps find the most relevant venue based on a user’s query, utilizing **MPNet embeddings** for semantic search and ranking.
 
 ## Project Overview
 
-This repository implements a basic recommendation system using the following technologies:
+This project consists of three main components:
 
-- **Data Processing**: Preprocessing of datasets.
-- **Machine Learning Models**: Basic recommendation algorithms (e.g., collaborative filtering, content-based).
-- **Backend**: Python scripts to execute and test the recommendation algorithms.
+1. **MPNet Embeddings**: Used for semantic search and ranking of venues and reviews.
+2. **PostgreSQL Database**: Stores data related to venues, reviews, and working areas, along with their embeddings.
+3. **RAG Model**: Performs the search and ranking of venues based on user queries, using the embeddings stored in the database.
+
+### Key Files
+
+- `load_csv_todb.py`: A script that loads data into the PostgreSQL database from CSV files containing venue and review information.
+- `search.py`: A script that performs semantic search queries using the RAG model.
+- `main.sql`: SQL file that defines the structure of the database tables.
+- `requirements.txt`: The list of dependencies for the project.
   
-The full version of this project (not available in this repository) includes additional features such as a user interface, more advanced models, scalability improvements, and integration with databases for storing user preferences.
+## Database Structure
+
+The PostgreSQL database contains three main tables:
+
+1. **venues**: Stores information about various venues (e.g., name, location, description).
+2. **reviews**: Contains user reviews for venues (e.g., review text, rating).
+3. **catalog**: Describes different working areas for venues (e.g., area name, description).
+
+The **MPNet embeddings** for venues and reviews are stored in the database and are used for semantic similarity search.
 
 ## Setup Instructions
 
-### 1. **Clone the Repository**
+### 1. Clone the Repository
 
-Clone this simplified version of the repository to your local machine:
+Clone this repository to your local machine:
 
 ```
-git clone https://github.com/goodiee/recommendation-system.git
-cd recommendation-system
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
 ```
 
 ### 2. Install Dependencies
@@ -29,14 +44,51 @@ Install the required Python packages:
 ```
 pip install -r requirements.txt
 ```
+### 3. Set Up PostgreSQL Database
+Make sure you have PostgreSQL installed and running. Create a new database and load the schema from main.sql:
 
-3. Run the Recommendation System
-Once the dependencies are installed, you can run the recommendation system. Typically, you would run the following:
+
+-- Connect to your PostgreSQL server
+```
+psql -h localhost -U postgres
+```
+-- Create a new database
+```
+CREATE DATABASE your_database;
+```
+-- Execute the SQL schema
+```
+\i main.sql
+```
+###4. Load Data into the Database
+Use the load_csv_todb.py script to load data from CSV files into the database:
+
+```
+python load_csv_todb.py
+```
+This will load the data from your CSV files (venues, reviews, catalog) into the PostgreSQL database.
+
+5. Running the RAG Search
+Once the data is loaded, you can run the search.py script to perform a semantic search for venues based on your query. The RAG model will return the most relevant venues based on MPNet embeddings.
+
+To run the search, simply execute the following:
 
 ```
 python search.py
 ```
-This will execute the recommendation logic and display the results based on the dataset used.
+You will be prompted to enter a query. The RAG model will search the database and return the relevant venue(s) based on semantic similarity.
 
-4. Modify the Data (Optional)
+File Descriptions
+load_csv_todb.py: Loads venue, review, and working area data into the PostgreSQL database.
+
+search.py: Runs the RAG-based search and returns the most relevant venues based on a query.
+
+main.sql: Defines the schema and structure for the PostgreSQL database.
+
+requirements.txt: Lists the required Python packages for the project.
+
+Example Usage
+
+What is the best venue for a quiet evening out?
+The system will return relevant venues based on the query, using semantic search over MPNet embeddings.
 You can modify the dataset (usually found in data/ folder or within specific CSV files) to experiment with different input data for generating recommendations.
