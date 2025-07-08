@@ -18,71 +18,25 @@ The full version of this project (not available in this repository) includes add
 
 Clone this simplified version of the repository to your local machine:
 
-```bash
+```
 git clone https://github.com/goodiee/recommendation-system.git
 cd recommendation-system
+```
 
-
-2. Install Dependencies
+### 2. Install Dependencies
 Install the required Python packages:
 
-bash
-Copy
-Edit
+```
 pip install -r requirements.txt
+```
+
 3. Run the Recommendation System
 Once the dependencies are installed, you can run the recommendation system. Typically, you would run the following:
 
-bash
-Copy
-Edit
-python recommend.py
+```
+python search.py
+```
 This will execute the recommendation logic and display the results based on the dataset used.
 
 4. Modify the Data (Optional)
 You can modify the dataset (usually found in data/ folder or within specific CSV files) to experiment with different input data for generating recommendations.
-
-Key Technologies Used
-Python
-
-Pandas (for data manipulation)
-
-Scikit-learn (for machine learning models)
-
-Flask or similar backend framework (if applicable)
-
-Other libraries for data visualization or recommendation techniques (e.g., numpy, matplotlib)
-
-Example Usage
-Running the Recommendation System:
-
-bash
-Copy
-Edit
-python recommend.py
-This will generate recommendations based on the input data.
-
-Changing the Dataset:
-
-If you'd like to modify the dataset, look for files in the data/ directory (or similar) where you can input new data or adjust existing entries.
-
-Notes
-This repository is a simplified version for educational purposes, showcasing the basic technologies used in recommendation systems.
-
-The full, real-world project (which includes more advanced features) is not part of this repository but is built using the same principles.
-
-Dependencies
-numpy
-
-pandas
-
-scikit-learn
-
-flask (if used for backend)
-
-Install the dependencies using:
-
-bash
-Copy
-Edit
-pip install -r requirements.txt
