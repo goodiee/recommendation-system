@@ -1,0 +1,11 @@
+item_id,space_id,name,description,size,images,price,item_type,category,created_at
+1,7,Noise-Cancelling Headphones,"High-quality over-ear headphones with ANC",standard,,7.5,tech,audio/headphones,2024.12.17
+2,7,4K Action Camera,"Compact waterproof camera, perfect for adventures",small,,8.9,tech,video/action-cam,2024.12.17
+3,7,4K Action Camera,"Compact waterproof camera, perfect for adventures",bundle,,11.2,tech,video/action-cam,2024.12.17
+4,7,4K Action Camera,"Compact waterproof camera, perfect for adventures",pro-kit,,19.0,tech,video/action-cam,2024.12.17
+5,7,"Portable Projector",,mini,projector_mini.png,2.5,tech,display/projector,2024.12.17
+6,7,"Portable Projector",,standard,,3.2,tech,display/projector,2024.12.17
+7,7,USB Microphone,"Studio-quality condenser mic for podcasts",standard,,10.4,tech,audio/microphone,2024.12.17
+8,7,"Smart Water Bottle","Tracks hydration and syncs with app",500ml,,2.9,gear,wellness/hydration,2024.12.17
+9,7,"Ergonomic Laptop Stand","Adjustable aluminum stand for laptops",one-size,,4.5,gear,office/ergonomic,2024.12.17
+10,7,"Wireless Presenter Remote","Laser pointer with slide control for presentations",compact,,5.1,tech,office/accessory,2024.12.17
