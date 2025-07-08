@@ -1,6 +1,7 @@
 # RAG with MPNet Embeddings for Venue Search and Reviews
 
-This repository implements a **Retrieval-Augmented Generation (RAG)** model for querying a PostgreSQL database containing venue information and reviews. The RAG helps find the most relevant venue based on a user’s query, utilizing **MPNet embeddings** for semantic search and ranking.
+This repository implements a **Retrieval-Augmented Generation (RAG)** model for querying a PostgreSQL database containing venue information and reviews. The RAG helps find the most relevant venue based on a user’s query, utilizing **MPNet embeddings** for semantic search and ranking. This repository is a **simplified analogue** of a real recommendation system project. It serves to demonstrate the technologies and methodologies used in building recommendation systems. The full project contains more features and complexity, but this version showcases the core concepts and tools used in the process.
+
 
 ## Project Overview
 
