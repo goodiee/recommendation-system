@@ -69,7 +69,8 @@ python load_csv_todb.py
 ```
 This will load the data from your CSV files (venues, reviews, catalog) into the PostgreSQL database.
 
-5. Running the RAG Search
+###5. Running the RAG Search
+
 Once the data is loaded, you can run the search.py script to perform a semantic search for venues based on your query. The RAG model will return the most relevant venues based on MPNet embeddings.
 
 To run the search, simply execute the following:
