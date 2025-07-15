@@ -61,7 +61,7 @@ CREATE DATABASE your_database;
 ```
 \i main.sql
 ```
-###4. Load Data into the Database
+### 4. Load Data into the Database
 Use the load_csv_todb.py script to load data from CSV files into the database:
 
 ```
@@ -69,7 +69,7 @@ python load_csv_todb.py
 ```
 This will load the data from your CSV files (venues, reviews, catalog) into the PostgreSQL database.
 
-###5. Running the RAG Search
+### 5. Running the RAG Search
 
 Once the data is loaded, you can run the search.py script to perform a semantic search for venues based on your query. The RAG model will return the most relevant venues based on MPNet embeddings.
 
@@ -89,7 +89,7 @@ main.sql: Defines the schema and structure for the PostgreSQL database.
 
 requirements.txt: Lists the required Python packages for the project.
 
-Example Usage
+### Example Usage
 
 What is the best venue for a quiet evening out?
 The system will return relevant venues based on the query, using semantic search over MPNet embeddings.
