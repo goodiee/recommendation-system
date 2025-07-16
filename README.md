@@ -2,14 +2,28 @@
 
 This repository implements a **Retrieval-Augmented Generation (RAG)** model for querying a PostgreSQL database containing venue information and reviews. The RAG helps find the most relevant venue based on a user’s query, utilizing **MPNet embeddings** for semantic search and ranking. This repository is a **simplified analogue** of a real recommendation system project. It serves to demonstrate the technologies and methodologies used in building recommendation systems. The full project contains more features and complexity, but this version showcases the core concepts and tools used in the process.
 
-
 ## Project Overview
 
-This project consists of three main components:
+The project is built around three core components:
 
-1. **MPNet Embeddings**: Used for semantic search and ranking of venues and reviews.
-2. **PostgreSQL Database**: Stores data related to venues, reviews, and working areas, along with their embeddings.
-3. **RAG Model**: Performs the search and ranking of venues based on user queries, using the embeddings stored in the database.
+- **MPNet Embeddings**  
+  MPNet embeddings are used for transforming textual data (venue names, reviews, and queries) into dense vectors. These vectors enable semantic search, allowing the system to find venues based on meaning rather than just keyword matches.
+
+- **PostgreSQL Database (with pgvector)**  
+  The PostgreSQL database stores:
+  - Venue information (name, location, etc.)
+  - Reviews associated with each venue
+  - MPNet embeddings for venues and reviews
+
+  The pgvector extension enables efficient vector similarity search directly inside the database.
+
+- **RAG Model Logic**  
+  The RAG logic processes user queries as follows:
+  1. Encodes the user’s query using MPNet embeddings
+  2. Searches the vector store (PostgreSQL) for the most similar venues
+  3. Ranks and returns the top results
+
+---
 
 ### Key Files
 
@@ -44,8 +58,24 @@ Install the required Python packages:
 
 ```
 pip install -r requirements.txt
+
 ```
-### 3. Set Up PostgreSQL Database
+
+### 3. Create Environment Variables
+
+`cp .env.example .env
+`
+
+### 4. Build and Run with Docker
+
+`docker-compose up --build
+`
+This will:
+- Build the Docker image
+- Start PostgreSQL with pgvector
+- Expose the database for your Python scripts
+
+### 4. Set Up PostgreSQL Database
 Make sure you have PostgreSQL installed and running. Create a new database and load the schema from main.sql:
 
 
@@ -61,15 +91,15 @@ CREATE DATABASE your_database;
 ```
 \i main.sql
 ```
-### 4. Load Data into the Database
+### 5. Load Data into the Database
 Use the load_csv_todb.py script to load data from CSV files into the database:
 
 ```
-python load_csv_todb.py
+python load_data_to_db.py
 ```
 This will load the data from your CSV files (venues, reviews, catalog) into the PostgreSQL database.
 
-### 5. Running the RAG Search
+### 6. Running the RAG Search
 
 Once the data is loaded, you can run the search.py script to perform a semantic search for venues based on your query. The RAG model will return the most relevant venues based on MPNet embeddings.
 
@@ -91,6 +121,19 @@ requirements.txt: Lists the required Python packages for the project.
 
 ### Example Usage
 
-What is the best venue for a quiet evening out?
-The system will return relevant venues based on the query, using semantic search over MPNet embeddings.
-You can modify the dataset (usually found in data/ folder or within specific CSV files) to experiment with different input data for generating recommendations.
+Once everything is set up, you can run the search pipeline. For example, running the RAG logic might look like this:
+
+Enter your search query: coworking with free coffee
+Initializing PGVector vector store...
+
+`Top 5 venues found:
+ID: 6, Name: Coffee Point, Location: 0101000020E61000000F0BB5A6794739401CEBE2361A584B40
+ID: 1, Name: Free Space, Location: 0101000020E61000009D8026C2864739408E75711B0D584B40
+ID: 10, Name: Desk & Coffee, Location: 0101000020E6100000105839B4C84639409EEFA7C64B574B40
+ID: 13, Name: Creative Hub, Location: 0101000020E6100000D95F764F1E46394064CC5D4BC8574B40
+ID: 3, Name: Forge Station, Location: 0101000020E6100000CF488446B0453940FDC0559E40584B40`
+
+This indicates that the system has:
+- Encoded your search query
+- Performed a similarity search in PostgreSQL
+- Returned the top-matching venues along with their locations (in WKB geometry format)
