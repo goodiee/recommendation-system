@@ -124,17 +124,24 @@ requirements.txt: Lists the required Python packages for the project.
 
 Once everything is set up, you can run the search pipeline. For example, running the RAG logic might look like this:
 
-Enter your search query: coworking with free coffee
+`Enter your search query: coworking with free coffee
+`
 
-Initializing PGVector vector store...
+`Initializing PGVector vector store...
+`
 
 `Top 5 venues found:`
 
-`ID: 6, Name: Coffee Point, Location: 0101000020E61000000F0BB5A6794739401CEBE2361A584B40
-ID: 1, Name: Free Space, Location: 0101000020E61000009D8026C2864739408E75711B0D584B40
-ID: 10, Name: Desk & Coffee, Location: 0101000020E6100000105839B4C84639409EEFA7C64B574B40
-ID: 13, Name: Creative Hub, Location: 0101000020E6100000D95F764F1E46394064CC5D4BC8574B40
-ID: 3, Name: Forge Station, Location: 0101000020E6100000CF488446B0453940FDC0559E40584B40`
+
+- ID: 6, Name: Coffee Point, Location: 0101000020E61000000F0BB5A6794739401CEBE2361A584B40
+
+- ID: 1, Name: Free Space, Location: 0101000020E61000009D8026C2864739408E75711B0D584B40
+
+- ID: 10, Name: Desk & Coffee, Location: 0101000020E6100000105839B4C84639409EEFA7C64B574B40
+
+- ID: 13, Name: Creative Hub, Location: 0101000020E6100000D95F764F1E46394064CC5D4BC8574B40
+
+- ID: 3, Name: Forge Station, Location: 0101000020E6100000CF488446B0453940FDC0559E40584B40
 
 This indicates that the system has:
 
