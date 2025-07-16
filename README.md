@@ -75,7 +75,7 @@ This will:
 - Start PostgreSQL with pgvector
 - Expose the database for your Python scripts
 
-### 4. Set Up PostgreSQL Database
+### 5. Set Up PostgreSQL Database
 Make sure you have PostgreSQL installed and running. Create a new database and load the schema from main.sql:
 
 
@@ -91,7 +91,7 @@ CREATE DATABASE your_database;
 ```
 \i main.sql
 ```
-### 5. Load Data into the Database
+### 6. Load Data into the Database
 Use the load_csv_todb.py script to load data from CSV files into the database:
 
 ```
@@ -99,7 +99,7 @@ python load_data_to_db.py
 ```
 This will load the data from your CSV files (venues, reviews, catalog) into the PostgreSQL database.
 
-### 6. Running the RAG Search
+### 7. Running the RAG Search
 
 Once the data is loaded, you can run the search.py script to perform a semantic search for venues based on your query. The RAG model will return the most relevant venues based on MPNet embeddings.
 
@@ -119,7 +119,7 @@ main.sql: Defines the schema and structure for the PostgreSQL database.
 
 requirements.txt: Lists the required Python packages for the project.
 
-### Example Usage
+### 8. Example Usage
 
 Once everything is set up, you can run the search pipeline. For example, running the RAG logic might look like this:
 
