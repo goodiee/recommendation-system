@@ -106,7 +106,7 @@ Once the data is loaded, you can run the search.py script to perform a semantic 
 To run the search, simply execute the following:
 
 ```
-python search.py
+python .\rag\search.py
 ```
 You will be prompted to enter a query. The RAG model will search the database and return the relevant venue(s) based on semantic similarity.
 
