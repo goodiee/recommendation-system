@@ -141,3 +141,16 @@ This indicates that the system has:
 - Encoded your search query
 - Performed a similarity search in PostgreSQL
 - Returned the top-matching venues along with their locations (in WKB geometry format)
+
+### 8. Technologies Used
+- Python
+- Sentence-Transformers (MPNet embeddings)
+- PostgreSQL
+- pgvector
+- Docker / Docker Compose
+
+## Contributing & Thanks
+I’m glad to contribute to open-source and share this work! 🎉
+Feel free to open issues, suggest improvements, or contribute code. Let’s build better tools together. 🚀
+Happy coding! ✨
+
