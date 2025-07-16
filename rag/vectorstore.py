@@ -2,12 +2,9 @@ import os
 import psycopg2
 from pgvector.psycopg2 import register_vector
 from langchain_postgres.vectorstores import PGVector
-from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 from langchain.schema import Document
-import getpass
 from langchain_huggingface import HuggingFaceEmbeddings
-
 
 load_dotenv()
 
@@ -25,34 +22,81 @@ def get_embeddings(model_choice="mpnet"):
 def create_tables():
     connection = psycopg2.connect(DB_URL)
     cursor = connection.cursor()
+
+    cursor.execute("CREATE EXTENSION IF NOT EXISTS vector;")
     register_vector(cursor)
 
     cursor.execute(""" 
-    CREATE TABLE IF NOT EXISTS venues (
-        venue_id SERIAL PRIMARY KEY,
-        name TEXT,
-        location TEXT,
-        features TEXT[],
-        atmosphere TEXT,
-        embedding VECTOR(768)
-    );
+        CREATE TABLE IF NOT EXISTS venues (
+            venue_id SERIAL PRIMARY KEY,
+            name TEXT,
+            location TEXT,
+            features TEXT[],
+            music_type TEXT,
+            atmosphere TEXT
+            -- note: don't include embedding_mpnet here,
+            -- because we want to add it separately if missing
+        );
     """)
+
+    cursor.execute("""
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_name = 'venues'
+          AND column_name = 'embedding_mpnet';
+    """)
+    exists = cursor.fetchone()
+
+    if not exists:
+        print("embedding_mpnet column not found, creating it...")
+        cursor.execute("""
+            ALTER TABLE venues
+            ADD COLUMN embedding_mpnet vector(768);
+        """)
+        print("embedding_mpnet column created.")
+    else:
+        print("embedding_mpnet column already exists.")
+
     connection.commit()
     cursor.close()
     connection.close()
 
+    connection = psycopg2.connect(DB_URL)
+    cursor = connection.cursor()
 
+    cursor.execute("CREATE EXTENSION IF NOT EXISTS vector;")
+
+    register_vector(cursor)
+
+    cursor.execute(""" 
+        CREATE TABLE IF NOT EXISTS venues (
+            venue_id SERIAL PRIMARY KEY,
+            name TEXT,
+            location TEXT,
+            features TEXT[],
+            music_type TEXT,
+            atmosphere TEXT,
+            embedding_mpnet VECTOR(768)
+        );
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 def store_embeddings(embedding_model):
     print("Connecting to database to store embeddings...")
+
     connection = psycopg2.connect(DB_URL)
     cursor = connection.cursor()
+
+    cursor.execute("CREATE EXTENSION IF NOT EXISTS vector;")
     register_vector(cursor)
     print("Vector registered successfully.")
 
     cursor.execute("""
-    SELECT venue_id, name, location, features, music_type, atmosphere
-    FROM venues
+        SELECT venue_id, name, location, features, music_type, atmosphere
+        FROM venues
     """)
     venues = cursor.fetchall()
     print(f"Fetched {len(venues)} venues from the database.")
@@ -87,16 +131,10 @@ def store_embeddings(embedding_model):
 
     print(f"Generating embeddings for {len(texts)} venues...")
 
-    if isinstance(embedding_model, HuggingFaceEmbeddings):
-        embeddings = embedding_model.embed_documents(texts)
-        column_name = "embedding_mpnet"
-    elif isinstance(embedding_model, OpenAIEmbeddings):
-        embeddings = [embedding_model.embed_query(text) for text in texts]
-        column_name = "embedding"
-    else:
-        raise ValueError("Unknown embedding model")
+    embeddings = embedding_model.embed_documents(texts)
+    column_name = "embedding_mpnet"
 
-    print(f"Embeddings generated. Example: {embeddings[0][:5]}...")
+    print(f"Embeddings generated. Example embedding snippet: {embeddings[0][:5]}")
 
     for venue_id, embedding in zip(venue_ids, embeddings):
         cursor.execute(
@@ -117,17 +155,13 @@ def store_embeddings(embedding_model):
     vector_store.add_documents(documents, ids=ids)
     print("Documents added to vector store.")
 
-
 def get_vectorstore(embedding_model):
     print("Initializing PGVector vector store...")
 
-    connection = DB_URL
-    
     vector_store = PGVector(
         embeddings=embedding_model,
         collection_name="venues",
-        connection=connection,
-        use_jsonb=True,  
+        connection=DB_URL,
+        use_jsonb=True,
     )
-
     return vector_store

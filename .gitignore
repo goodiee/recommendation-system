@@ -10,7 +10,6 @@ dist/
 build/
 
 .env
-.env.*
 *.env
 
 .vscode/
