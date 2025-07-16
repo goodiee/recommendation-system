@@ -27,7 +27,7 @@ The project is built around three core components:
 
 ### Key Files
 
-- `load_csv_todb.py`: A script that loads data into the PostgreSQL database from CSV files containing venue and review information.
+- `load_data_to_db`: A script that loads data into the PostgreSQL database from CSV files containing venue and review information.
 - `search.py`: A script that performs semantic search queries using the RAG model.
 - `main.sql`: SQL file that defines the structure of the database tables.
 - `requirements.txt`: The list of dependencies for the project.
