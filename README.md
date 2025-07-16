@@ -111,7 +111,8 @@ python search.py
 You will be prompted to enter a query. The RAG model will search the database and return the relevant venue(s) based on semantic similarity.
 
 File Descriptions
-load_csv_todb.py: Loads venue, review, and working area data into the PostgreSQL database.
+
+load_data_to_db.py: Loads venue, review, and working area data into the PostgreSQL database.
 
 search.py: Runs the RAG-based search and returns the most relevant venues based on a query.
 
