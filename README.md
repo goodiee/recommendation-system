@@ -156,8 +156,3 @@ This indicates that the system has:
 - pgvector
 - Docker / Docker Compose
 
-## Contributing & Thanks
-I’m glad to contribute to open-source and share this work! 🎉
-Feel free to open issues, suggest improvements, or contribute code. Let’s build better tools together. 🚀
-Happy coding! ✨
-
