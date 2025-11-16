@@ -87,13 +87,10 @@ def load_csv_to_db(conn, csv_path):
                 reservation_price_base = float(row.get("reservation_price_base", "0") or "0")
                 reservation_price_per_person = float(row.get("reservation_price_per_person", "0") or "0")
                 reservation_phone = row.get("reservation_phone", "").strip()
-
-                images = parse_pg_array(row.get("images", ""))
                 features = parse_pg_array(row.get("features", ""))
                 music_type = parse_pg_array(row.get("music_type", ""))
                 atmosphere = parse_pg_array(row.get("atmosphere", ""))
-
-                images_pg = to_pg_array(images)
+                
                 features_pg = to_pg_array(features)
                 music_type_pg = to_pg_array(music_type)
                 atmosphere_pg = to_pg_array(atmosphere)
@@ -110,12 +107,12 @@ def load_csv_to_db(conn, csv_path):
                         venue_id, type, name, logo, location, plus_code, address, phone_number, email, website_url,
                         working_hours, accessibility_pets, accessibility_disabled, seating_inside, seating_outside,
                         reservation_available, reservation_price_base, reservation_price_per_person, reservation_phone,
-                        images, features, music_type, atmosphere, metadata, created_at, updated_at
+                        features, music_type, atmosphere, metadata, created_at, updated_at
                     ) VALUES (
                         %(venue_id)s, %(type)s, %(name)s, %(logo)s::text[], ST_GeogFromText(%(location)s), %(plus_code)s, %(address)s, %(phone_number)s,
                         %(email)s, %(website_url)s, %(working_hours)s::jsonb, %(accessibility_pets)s, %(accessibility_disabled)s,
                         %(seating_inside)s, %(seating_outside)s, %(reservation_available)s, %(reservation_price_base)s,
-                        %(reservation_price_per_person)s, %(reservation_phone)s, %(images)s::text[], %(features)s::text[], %(music_type)s::text[],
+                        %(reservation_price_per_person)s, %(reservation_phone)s, %(features)s::text[], %(music_type)s::text[],
                         %(atmosphere)s::text[], %(metadata)s, %(created_at)s::timestamptz, %(updated_at)s::timestamptz
                     )
                     ON CONFLICT (venue_id) DO NOTHING;
@@ -140,7 +137,6 @@ def load_csv_to_db(conn, csv_path):
                         "reservation_price_base": reservation_price_base,
                         "reservation_price_per_person": reservation_price_per_person,
                         "reservation_phone": reservation_phone,
-                        "images": images_pg,
                         "features": features_pg,
                         "music_type": music_type_pg,
                         "atmosphere": atmosphere_pg,
@@ -166,20 +162,18 @@ def load_catalog_csv(conn, csv_path):
                 name = row["name"].strip()
                 description = row.get("description") or None
                 size = row.get("size") or None
-                images = parse_pg_array(row.get("images", ""))
                 price = float(row["price"])
                 item_type = row.get("item_type") or None
                 category = row.get("category") or None
                 created_at = parse_date(row.get("created_at"))
 
-                images_pg = to_pg_array(images)
 
                 cursor.execute(
                     """
                     INSERT INTO catalog (
-                        item_id, space_id, name, description, size, images, price, item_type, category, created_at
+                        item_id, space_id, name, description, size, price, item_type, category, created_at
                     ) VALUES (
-                        %(item_id)s, %(space_id)s, %(name)s, %(description)s, %(size)s, %(images)s::text[], %(price)s,
+                        %(item_id)s, %(space_id)s, %(name)s, %(description)s, %(size)s, %(price)s,
                         %(item_type)s, %(category)s, %(created_at)s::timestamptz
                     )
                     ON CONFLICT (item_id) DO NOTHING;
@@ -190,7 +184,6 @@ def load_catalog_csv(conn, csv_path):
                         "name": name,
                         "description": description,
                         "size": size,
-                        "images": images_pg,
                         "price": price,
                         "item_type": item_type,
                         "category": category,
